@@ -1,6 +1,5 @@
 package com.cutta.kehance.di.module
 
-import android.app.Application
 import android.content.Context
 import com.cutta.kehance.KehanceApplication
 import dagger.Module
@@ -14,8 +13,7 @@ import javax.inject.Singleton
 @Module(includes = [(ViewModelModule::class)])
 class AppModule{
 
-    @Provides
     @Singleton
-    fun provideContext(application: KehanceApplication): Context = application.applicationContext
-
+    @Provides
+    fun provideApplicationContext(application: KehanceApplication): Context = application.applicationContext
 }

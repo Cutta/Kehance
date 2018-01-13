@@ -1,6 +1,7 @@
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-kapt'
 
 def libraries = rootProject.ext.libraries
 def configuration = rootProject.ext.configuration
@@ -39,10 +40,6 @@ android {
         }
     }
 
-    dataBinding {
-        enabled true
-    }
-
     kapt {
         generateStubs = true
     }
@@ -50,7 +47,7 @@ android {
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation"org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jre7:${libraries.kotlin}"
     implementation "com.android.support:appcompat-v7:${libraries.support}"
     implementation "com.android.support:design:${libraries.support}"
     implementation "com.android.support:cardview-v7:${libraries.support}"
@@ -64,6 +61,11 @@ dependencies {
     implementation "com.squareup.okhttp3:okhttp:${libraries.okhttp}"
     implementation "com.squareup.okhttp3:logging-interceptor:${libraries.okhttp}"
 
+
+    implementation "com.github.bumptech.glide:glide:${libraries.glide}"
+    implementation "com.github.bumptech.glide:okhttp3-integration:${libraries.glide}"
+    kapt "com.github.bumptech.glide:compiler:${libraries.glide}"
+
     //RX
     implementation "io.reactivex.rxjava2:rxandroid:${libraries.rxandroid}"
     implementation "io.reactivex.rxjava2:rxjava:${libraries.rxjava}"
@@ -74,12 +76,12 @@ dependencies {
     kapt "com.google.dagger:dagger-compiler:${libraries.dagger}"
     kapt "com.google.dagger:dagger-android-processor:${libraries.dagger}"
 
-
     //ARCH
     implementation "android.arch.lifecycle:runtime:${libraries.archRuntime}"
     implementation "android.arch.lifecycle:extensions:${libraries.arch}"
     implementation "android.arch.lifecycle:reactivestreams:${libraries.arch}"
     kapt "android.arch.lifecycle:compiler:1.0.0"
+
 
     androidTestImplementation 'com.android.support.test:runner:1.0.1'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'

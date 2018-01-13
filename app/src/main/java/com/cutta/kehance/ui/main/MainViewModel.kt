@@ -14,7 +14,6 @@ import javax.inject.Inject
 
 class MainViewModel @Inject constructor(kehanceRepository: KehanceRepository) : BaseViewModel() {
 
-
     private val projectsLiveData = MutableLiveData<ProjectList>()
 
     val projects: LiveData<ProjectList>

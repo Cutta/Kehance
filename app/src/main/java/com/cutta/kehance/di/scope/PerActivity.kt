@@ -8,4 +8,4 @@ import javax.inject.Scope
 
 @Scope
 @Retention(AnnotationRetention.RUNTIME)
-internal annotation class Activity
+internal annotation class PerActivity
