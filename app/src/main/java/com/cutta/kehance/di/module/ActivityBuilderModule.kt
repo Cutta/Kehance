@@ -2,6 +2,7 @@ package com.cutta.kehance.di.module
 
 import com.cutta.kehance.ui.main.MainActivity
 import com.cutta.kehance.di.scope.PerActivity
+import com.cutta.kehance.ui.detail.DetailActivity
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
 
@@ -14,4 +15,8 @@ abstract class ActivityBuilderModule {
     @PerActivity
     @ContributesAndroidInjector()
     abstract fun mainActivity(): MainActivity
+
+    @PerActivity
+    @ContributesAndroidInjector()
+    abstract fun detailActivity(): DetailActivity
 }

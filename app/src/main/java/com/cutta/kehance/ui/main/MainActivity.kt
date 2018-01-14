@@ -1,13 +1,12 @@
 package com.cutta.kehance.ui.main
 
 import android.arch.lifecycle.Observer
+import android.content.Intent
 import android.os.Bundle
-import android.util.Log
-import android.widget.Toast
 import com.cutta.kehance.R
 import com.cutta.kehance.data.remote.model.ProjectItem
-import com.cutta.kehance.data.remote.model.ProjectList
 import com.cutta.kehance.ui.base.BaseActivity
+import com.cutta.kehance.ui.detail.DetailActivity
 import com.cutta.kehance.util.extension.isPortrait
 import com.cutta.kehance.util.extension.load
 import kotlinx.android.synthetic.main.activity_main.*
@@ -34,12 +33,12 @@ class MainActivity : BaseActivity<MainViewModel>(), ProjectListAdapter.ProjectCl
     private fun initViews() {
 
         recyclerAdapter = ProjectListAdapter(layoutResId = R.layout.item_project, listener = this) {
-            projectImage.load(it.covers?.jsonMember404)
-            projectOwnerName.text = it.owners?.getOrNull(0)?.displayName ?: ""
+            projectImage.load(it.covers.jsonMember404)
+            projectOwnerName.text = it.owners.getOrNull(0)?.displayName ?: ""
             projectName.text = it.name
-            projectField.text = it.fields?.getOrElse(0, { _ -> "" })
-            projectLikeCount.text = it.stats?.appreciations.toString()
-            projectViewsCount.text = it.stats?.views.toString()
+            projectField.text = it.fields.getOrElse(0, { _ -> "" })
+            projectLikeCount.text = it.stats.appreciations.toString()
+            projectViewsCount.text = it.stats.views.toString()
         }
 
         with(projectsRecyclerView) {
@@ -50,8 +49,10 @@ class MainActivity : BaseActivity<MainViewModel>(), ProjectListAdapter.ProjectCl
         }
     }
 
-    override fun onProjectClick(item: ProjectItem, position: Int) {
-        Toast.makeText(this, item.name, Toast.LENGTH_SHORT).show()
+    override fun onProjectClick(item: ProjectItem) {
+        val intent = Intent(this, DetailActivity::class.java)
+        intent.putExtra(DetailActivity.INTENT_EXTRA_PROJECT_ID, item.id.toString())
+        startActivity(intent)
     }
 
     override fun getLayoutId() = R.layout.activity_main

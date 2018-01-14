@@ -17,7 +17,7 @@ data class ProjectItem(
         val matureAccess: String? = null,
 
         @field:SerializedName("owners")
-        val owners: List<OwnersItem>? = null,
+        val owners: List<OwnersItem>,
 
         @field:SerializedName("url")
         val url: String? = null,
@@ -38,7 +38,7 @@ data class ProjectItem(
         val createdOn: Int? = null,
 
         @field:SerializedName("stats")
-        val stats: Stats? = null,
+        val stats: Stats,
 
         @field:SerializedName("name")
         val name: String? = null,
@@ -47,8 +47,8 @@ data class ProjectItem(
         val id: Int? = null,
 
         @field:SerializedName("fields")
-        val fields: List<String>? = null,
+        val fields: List<String>,
 
         @field:SerializedName("covers")
-        val covers: Covers? = null
+        val covers: Covers
 )

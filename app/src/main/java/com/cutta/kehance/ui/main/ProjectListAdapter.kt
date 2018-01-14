@@ -18,7 +18,7 @@ class ProjectListAdapter(items: List<ProjectItem> = ArrayList(),
         val item = itemList[holder.adapterPosition]
         with(holder.itemView) {
             setOnClickListener {
-                listener.onProjectClick(item, holder.adapterPosition)
+                listener.onProjectClick(item)
             }
             bindHolder(itemList[holder.adapterPosition])
         }
@@ -26,7 +26,7 @@ class ProjectListAdapter(items: List<ProjectItem> = ArrayList(),
     }
 
     interface ProjectClickListener {
-        fun onProjectClick(item: ProjectItem, position: Int)
+        fun onProjectClick(item: ProjectItem)
     }
 
 }
