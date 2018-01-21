@@ -5,10 +5,9 @@ import android.arch.lifecycle.ViewModelProvider
 import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
 import android.support.annotation.LayoutRes
+import android.view.MenuItem
 import dagger.android.support.DaggerAppCompatActivity
 import javax.inject.Inject
-
-
 
 /**
  * Created by CuneytCarikci on 10/01/2018.
@@ -16,13 +15,17 @@ import javax.inject.Inject
 
 abstract class BaseActivity<VM : ViewModel> : DaggerAppCompatActivity() {
 
-    @Inject
-    lateinit var viewModelFactory: ViewModelProvider.Factory
 
     protected lateinit var viewModel: VM
 
+    @Inject
+    lateinit var viewModelFactory: ViewModelProvider.Factory
 
     abstract fun getViewModel(): Class<VM>
+
+    @LayoutRes
+    abstract fun getLayoutId(): Int
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -31,8 +34,14 @@ abstract class BaseActivity<VM : ViewModel> : DaggerAppCompatActivity() {
 
     }
 
-    @LayoutRes
-    abstract fun getLayoutId(): Int
-
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            android.R.id.home -> {
+                onBackPressed()
+                return true
+            }
+        }
+        return super.onOptionsItemSelected(item)
+    }
 
 }

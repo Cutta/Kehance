@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/rootLayout"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="?attr/actionBarSize">
+
+    <TextView
+        android:id="@+id/projectName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="16dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="24dp"
+        android:text="TextView"
+        android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
+        android:textColor="@android:color/black"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/projectFields"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="16dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:text="TextView"
+        android:textColor="@color/light_gray"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/projectName" />
+
+
+    <ImageView
+        android:id="@+id/likeIcon"
+        android:layout_width="16dp"
+        android:layout_height="16dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginStart="16dp"
+        android:src="@drawable/ic_thumb_up_black_24px"
+        android:tint="@color/light_gray"
+        app:layout_constraintBottom_toBottomOf="@+id/bookmarkIcon"
+        app:layout_constraintEnd_toStartOf="@+id/likeCount"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_chainStyle="packed"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/bookmarkIcon" />
+
+    <TextView
+        android:id="@+id/likeCount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="4dp"
+        android:layout_marginStart="4dp"
+        android:text="3251"
+        android:textColor="@color/light_gray"
+        app:layout_constraintBottom_toBottomOf="@+id/bookmarkIcon"
+        app:layout_constraintEnd_toStartOf="@+id/viewsIcon"
+        app:layout_constraintStart_toEndOf="@+id/likeIcon"
+        app:layout_constraintTop_toTopOf="@+id/bookmarkIcon" />
+
+    <ImageView
+        android:id="@+id/viewsIcon"
+        android:layout_width="16dp"
+        android:layout_height="16dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginStart="8dp"
+        android:src="@drawable/ic_remove_red_eye_black_24px"
+        android:tint="@color/light_gray"
+        app:layout_constraintBottom_toBottomOf="@+id/bookmarkIcon"
+        app:layout_constraintEnd_toStartOf="@+id/viewsCount"
+        app:layout_constraintStart_toEndOf="@+id/likeCount"
+        app:layout_constraintTop_toTopOf="@+id/bookmarkIcon" />
+
+    <TextView
+        android:id="@+id/viewsCount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="4dp"
+        android:layout_marginStart="4dp"
+        android:text="4636"
+        android:textColor="@color/light_gray"
+        app:layout_constraintBottom_toBottomOf="@+id/bookmarkIcon"
+        app:layout_constraintEnd_toStartOf="@+id/commentIcon"
+        app:layout_constraintStart_toEndOf="@+id/viewsIcon"
+        app:layout_constraintTop_toTopOf="@+id/bookmarkIcon" />
+
+    <ImageView
+        android:id="@+id/commentIcon"
+        android:layout_width="16dp"
+        android:layout_height="16dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginStart="8dp"
+        android:src="@drawable/ic_message_black_24px"
+        android:tint="@color/light_gray"
+        app:layout_constraintBottom_toBottomOf="@+id/bookmarkIcon"
+        app:layout_constraintEnd_toStartOf="@+id/commentCount"
+        app:layout_constraintStart_toEndOf="@id/viewsCount"
+        app:layout_constraintTop_toTopOf="@+id/bookmarkIcon" />
+
+    <TextView
+        android:id="@+id/commentCount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="4dp"
+        android:layout_marginStart="4dp"
+        android:text="858"
+        android:textColor="@color/light_gray"
+        app:layout_constraintBottom_toBottomOf="@+id/bookmarkIcon"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/commentIcon"
+        app:layout_constraintTop_toTopOf="@+id/bookmarkIcon" />
+
+    <ImageView
+        android:id="@+id/bookmarkIcon"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="4dp"
+        android:layout_marginRight="4dp"
+        android:layout_marginTop="8dp"
+        android:scaleType="centerInside"
+        android:src="@drawable/ic_bookmark_black_24px"
+        android:tint="@color/colorPrimaryDark"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/projectFields" />
+
+    <!--
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/floatingActionButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginRight="16dp"
+            android:foreground="?attr/selectableItemBackground"
+            android:src="@drawable/ic_message_black_24px"
+            android:tint="@android:color/white"
+            app:fabSize="normal"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
+            -->
+
+
+</android.support.constraint.ConstraintLayout>

@@ -1,5 +1,6 @@
 package com.cutta.kehance.data.remote
 
+import com.cutta.kehance.data.remote.model.Comments
 import com.cutta.kehance.data.remote.model.ProjectDetail
 import com.cutta.kehance.data.remote.model.ProjectItem
 import com.cutta.kehance.data.remote.model.ProjectList
@@ -18,6 +19,9 @@ interface KehanceService {
     fun getProjects(@Query("api_key") apiKey: String): Single<ProjectList>
 
     @GET("projects/{project_id}")
-    fun getProjectWithId(@Path(value = "project_id") id: String, @Query("api_key") apiKey: String): Single<ProjectDetail>
+    fun getProjectWithId(@Path("project_id") id: Int, @Query("api_key") apiKey: String): Single<ProjectDetail>
+
+    @GET("projects/{project_id}/comments")
+    fun getComments(@Path("project_id") id: Int, @Query("api_key") apiKey: String): Single<Comments>
 
 }

@@ -4,7 +4,7 @@ package com.cutta.kehance.data.remote.model
 import com.google.gson.annotations.SerializedName
 
 
-data class OwnersItem(
+data class UsersItem(
 
 	@field:SerializedName("country")
 	val country: String? = null,
@@ -52,7 +52,7 @@ data class OwnersItem(
 	val state: String? = null,
 
 	@field:SerializedName("fields")
-	val fields: List<String?>? = null,
+	val fields: List<String>? = null,
 
 	@field:SerializedName("first_name")
 	val firstName: String? = null,

@@ -19,7 +19,7 @@ abstract class BaseAdapter<T> constructor(
 
     override fun onCreateViewHolder(parent: ViewGroup,
                                     viewType: Int): Holder {
-        val view = parent inflate layoutResId
+        val view = parent.inflate(layoutResId)
         return Holder(view)
     }
 
@@ -31,9 +31,11 @@ abstract class BaseAdapter<T> constructor(
     protected open fun View.bind(item: T) {
     }
 
-    fun update(itemList: List<T>) {
-        this.itemList = itemList
-        notifyDataSetChanged()
+    fun update(itemList: List<T>?) {
+        itemList?.let {
+            this.itemList = itemList
+            notifyDataSetChanged()
+        }
     }
 
 }

@@ -2,6 +2,7 @@ package com.cutta.kehance.data.repository
 
 import com.cutta.kehance.BuildConfig
 import com.cutta.kehance.data.remote.KehanceService
+import com.cutta.kehance.data.remote.model.Comments
 import com.cutta.kehance.data.remote.model.ProjectDetail
 import com.cutta.kehance.data.remote.model.ProjectList
 import io.reactivex.Flowable
@@ -25,8 +26,14 @@ class KehanceRepository @Inject constructor(private val service: KehanceService)
                     .toFlowable()
 
 
-    fun getProjectWithId(id: String): Flowable<ProjectDetail> =
+    fun getProjectWithId(id: Int): Flowable<ProjectDetail> =
             service.getProjectWithId(id, BuildConfig.API_KEY)
+                    .subscribeOn(Schedulers.newThread())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .toFlowable()
+
+    fun getComments(id: Int): Flowable<Comments> =
+            service.getComments(id, BuildConfig.API_KEY)
                     .subscribeOn(Schedulers.newThread())
                     .observeOn(AndroidSchedulers.mainThread())
                     .toFlowable()

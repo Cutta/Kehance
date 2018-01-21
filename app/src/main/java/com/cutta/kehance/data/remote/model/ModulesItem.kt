@@ -58,10 +58,10 @@ data class ModulesItem(
         val originalEmbed: String,
 
         @field:SerializedName("original_width")
-        val orjinalWidth: Int,
+        val originalWidth: Int,
 
         @field:SerializedName("original_height")
-        val orjinalHeight: Int,
+        val originalHeight: Int,
 
         @field:SerializedName("width_unit")
         val widthUnit: String)

@@ -7,5 +7,6 @@ package com.cutta.kehance.util
 enum class ModuleType(val type: String) {
     TEXT("text"),
     IMAGE("image"),
-    EMBED("embed");
+    EMBED("embed"),
+    MEDIA_COLLECTION("media_collection")
 }
