@@ -29,7 +29,7 @@ android {
         versionName configuration.versionName
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 
-        buildConfigField "String", "API_URL", '"https://www.behance.net/v2/"'
+        buildConfigField "String", "API_URL", '"https://api.behance.net/v2/"'
         buildConfigField "String", "API_KEY", '"iPEuiNddiI9uOdB3HpdL2GSmcEX3EBsd"'
     }
 

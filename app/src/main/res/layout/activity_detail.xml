@@ -59,7 +59,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:padding="16dp">
+            android:padding="8dp">
 
             <LinearLayout
                 android:id="@+id/nestedLinearLayout"
@@ -71,22 +71,12 @@
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/commentsRecyclerView"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                tools:listitem="@layout/item_comment" />
 
         </LinearLayout>
 
     </android.support.v4.widget.NestedScrollView>
-
-
-    <ProgressBar
-        android:id="@+id/progressBar"
-        style="?android:attr/progressBarStyleHorizontal"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:indeterminate="true"
-        android:visibility="gone"
-        app:layout_anchor="@id/appBar"
-        app:layout_anchorGravity="bottom" />
 
     <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
@@ -105,7 +95,6 @@
             android:layout_marginStart="16dp"
             android:layout_marginTop="8dp"
             app:layout_constraintEnd_toStartOf="@+id/ownerName"
-            app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintHorizontal_chainStyle="spread_inside"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -127,7 +116,7 @@
         <Button
             android:id="@+id/followButton"
             android:layout_width="wrap_content"
-            android:layout_height="35dp"
+            android:layout_height="30dp"
             android:layout_margin="8dp"
             android:background="@drawable/button_border"
             android:foreground="?attr/selectableItemBackground"

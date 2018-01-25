@@ -7,7 +7,7 @@ import com.google.gson.annotations.SerializedName
 data class Images(
 
 	@field:SerializedName("100")
-	val jsonMember100: String? = null,
+	val jsonMember100: String,
 
 	@field:SerializedName("276")
 	val jsonMember276: String? = null,

@@ -1,14 +1,16 @@
 package com.cutta.kehance.util.extension
 
 import android.graphics.drawable.BitmapDrawable
+import android.graphics.drawable.Drawable
 import android.support.v7.graphics.Palette
-import android.transition.Fade
 import android.widget.ImageView
 import com.bumptech.glide.GenericTransitionOptions
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.DataSource
+import com.bumptech.glide.load.engine.GlideException
+import com.bumptech.glide.request.RequestListener
 import com.bumptech.glide.request.RequestOptions
-import com.bumptech.glide.request.transition.DrawableCrossFadeFactory
-import com.bumptech.glide.request.transition.TransitionFactory
+import com.bumptech.glide.request.target.Target
 import com.cutta.kehance.R
 import com.cutta.kehance.data.remote.model.ModulesItem
 import com.cutta.kehance.util.TransformationType
@@ -21,12 +23,28 @@ fun ImageView.generatePalette(listener: (Palette) -> Unit) {
     Palette.from((this.drawable as BitmapDrawable).bitmap).generate(listener)
 }
 
-fun ImageView.load(url: String?, requestOptions: TransformationType = TransformationType.DEFAULT) {
+fun ImageView.load(url: String?,
+                   requestOptions: TransformationType = TransformationType.DEFAULT,
+                   placeholder: Int = R.drawable.placeholder) {
     url?.let {
         Glide.with(this)
                 .load(url)
-                .apply(requestOptions.getTransformation().placeholder(R.drawable.placeholder))
+                .apply(requestOptions.getTransformation().placeholder(placeholder))
                 .into(this)
+    } ?: setImageBitmap(null)
+
+}
+
+fun ImageView.loadWithCallback(url: String?,
+                               requestOptions: TransformationType = TransformationType.DEFAULT,
+                               listener: KCallback.() -> Unit) {
+    url?.let {
+        Glide.with(this)
+                .load(url)
+                .apply(requestOptions.getTransformation())
+                .listener(KCallback().apply(listener))
+                .into(this)
+
     } ?: setImageBitmap(null)
 
 }
@@ -46,20 +64,6 @@ fun ImageView.load(module: ModulesItem) {
 
 }
 
-
-/*
-
-fun ImageView.loadWithCallback(url: String?, requestOptions: TransformationType = TransformationType.DEFAULT, callback: KCallback.() -> Unit) {
-    url?.let {
-        Glide.with(this)
-                .load(url)
-                .apply(requestOptions.getTransformation())
-                .listener(KCallback().apply(callback))
-                .into(this)
-    } ?: setImageBitmap(null)
-
-}
-
 class KCallback : RequestListener<Drawable> {
 
 
@@ -68,7 +72,7 @@ class KCallback : RequestListener<Drawable> {
 
     override fun onResourceReady(resource: Drawable?, model: Any?, target: Target<Drawable>?, dataSource: DataSource?, isFirstResource: Boolean): Boolean {
         onSuccess?.invoke()
-        return true
+        return false
     }
 
     override fun onLoadFailed(e: GlideException?, model: Any?, target: Target<Drawable>?, isFirstResource: Boolean): Boolean {
@@ -84,4 +88,3 @@ class KCallback : RequestListener<Drawable> {
         this.onError = function
     }
 }
-*/

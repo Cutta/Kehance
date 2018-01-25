@@ -1,9 +1,6 @@
 package com.cutta.kehance.data.remote
 
-import com.cutta.kehance.data.remote.model.Comments
-import com.cutta.kehance.data.remote.model.ProjectDetail
-import com.cutta.kehance.data.remote.model.ProjectItem
-import com.cutta.kehance.data.remote.model.ProjectList
+import com.cutta.kehance.data.remote.model.*
 import io.reactivex.Single
 import retrofit2.http.GET
 import retrofit2.http.Path
@@ -23,5 +20,8 @@ interface KehanceService {
 
     @GET("projects/{project_id}/comments")
     fun getComments(@Path("project_id") id: Int, @Query("api_key") apiKey: String): Single<Comments>
+
+    @GET("users/{user_id}")
+    fun getUser(@Path("user_id") id: Int, @Query("api_key") apiKey: String): Single<UserInfo>
 
 }

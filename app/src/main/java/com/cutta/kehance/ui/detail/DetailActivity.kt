@@ -4,7 +4,9 @@ import android.arch.lifecycle.Observer
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.support.v7.widget.DividerItemDecoration
 import android.support.v7.widget.LinearLayoutManager
+import android.text.format.DateFormat
 import android.util.Log
 import android.view.View
 import android.widget.ImageView
@@ -17,12 +19,14 @@ import com.cutta.kehance.data.remote.model.ModulesItem
 import com.cutta.kehance.data.remote.model.Project
 import com.cutta.kehance.data.remote.model.ProjectDetail
 import com.cutta.kehance.ui.base.BaseActivity
+import com.cutta.kehance.ui.user.UserDetailActivity
 import com.cutta.kehance.util.ModuleType
 import com.cutta.kehance.util.TransformationType
 import com.cutta.kehance.util.extension.*
 import kotlinx.android.synthetic.main.activity_detail.*
 import kotlinx.android.synthetic.main.item_comment.view.*
 import kotlinx.android.synthetic.main.layout_detail_header.*
+import java.util.*
 
 
 /**
@@ -51,6 +55,7 @@ class DetailActivity : BaseActivity<DetailViewModel>(), CommentListAdapter.Comme
         super.onCreate(savedInstanceState)
 
         setToolBar()
+        initViews()
         setRecyclerView()
         observeViewModel()
     }
@@ -64,21 +69,19 @@ class DetailActivity : BaseActivity<DetailViewModel>(), CommentListAdapter.Comme
         })
     }
 
-    private fun initViews(modules: List<ModulesItem>?) {
-        setContentModules(modules)
+    private fun initViews() {
         appBar.addOnOffsetChangedListener { appBarLayout, verticalOffset ->
             val percentage = Math.abs(verticalOffset).toFloat() / appBarLayout.totalScrollRange
             toolbarTitle.alpha = percentage
         }
     }
 
-
     private fun setRecyclerView() {
         commentsAdapter = CommentListAdapter(layoutResId = R.layout.item_comment, listener = this) {
             with(it) {
                 itemUserImage.load(user.images?.jsonMember100, TransformationType.CIRCLE)
                 itemUserName.text = user.displayName
-                itemCommentDate.text = createdOn.toString()
+                itemCommentDate.text = createdOn.toDate()
                 itemComment.text = comment
             }
         }
@@ -88,7 +91,7 @@ class DetailActivity : BaseActivity<DetailViewModel>(), CommentListAdapter.Comme
             setHasFixedSize(true)
             adapter = commentsAdapter
             isNestedScrollingEnabled = false
-            scheduleLayoutAnimation()
+            addItemDecoration(DividerItemDecoration(this@DetailActivity, LinearLayoutManager.VERTICAL))
         }
     }
 
@@ -100,9 +103,10 @@ class DetailActivity : BaseActivity<DetailViewModel>(), CommentListAdapter.Comme
             likeCount.text = it.stats.appreciations.toString()
             viewsCount.text = it.stats.views.toString()
             commentCount.text = it.stats.comments.toString()
-            ownerImage.load(it.owners.getOrNull(0)?.images?.jsonMember100 ?: "", TransformationType.CIRCLE)
+            ownerImage.load(it.owners.getOrNull(0)?.images?.jsonMember100
+                    ?: "", TransformationType.CIRCLE)
             ownerName.text = it.owners.getOrNull(0)?.displayName ?: ""
-            initViews(it.modules)
+            //setContentModules(it.modules)
         }
     }
 
@@ -148,11 +152,12 @@ class DetailActivity : BaseActivity<DetailViewModel>(), CommentListAdapter.Comme
     }
 
     override fun onCommentClick(item: CommentItem) {
-        Toast.makeText(this, item.id.toString(), Toast.LENGTH_SHORT).show()
+        startActivity(UserDetailActivity.getIntent(this, item.user.id, item.user.displayName))
     }
 
-    override fun getLayoutId(): Int = R.layout.activity_detail
+    override fun getLayoutId() = R.layout.activity_detail
 
-    override fun getViewModel(): Class<DetailViewModel> = DetailViewModel::class.java
+    override fun getViewModel() = DetailViewModel::class.java
 
 }
+

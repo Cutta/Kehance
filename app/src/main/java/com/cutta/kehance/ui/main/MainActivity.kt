@@ -3,6 +3,9 @@ package com.cutta.kehance.ui.main
 import android.arch.lifecycle.Observer
 import android.os.Bundle
 import android.support.v7.widget.GridLayoutManager
+import android.util.Log
+import android.view.Menu
+import android.view.MenuItem
 import com.cutta.kehance.R
 import com.cutta.kehance.data.remote.model.ProjectItem
 import com.cutta.kehance.ui.base.BaseActivity
@@ -12,15 +15,37 @@ import com.cutta.kehance.util.extension.load
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.item_project.view.*
 
+
 class MainActivity : BaseActivity<MainViewModel>(), ProjectListAdapter.ProjectClickListener {
 
     private lateinit var projectsAdapter: ProjectListAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        setToolBar()
         initViews()
         observeViewModel()
 
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.menu_main_activity, menu)
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            R.id.menu_item_search -> openSearchActivity()
+        }
+        return true
+    }
+
+    private fun openSearchActivity() {
+        Log.d("TAG", "openSearchActivity")
+    }
+
+    private fun setToolBar() {
+        setSupportActionBar(toolbar)
     }
 
     private fun observeViewModel() {
@@ -57,6 +82,6 @@ class MainActivity : BaseActivity<MainViewModel>(), ProjectListAdapter.ProjectCl
 
     override fun getLayoutId() = R.layout.activity_main
 
-    override fun getViewModel(): Class<MainViewModel> = MainViewModel::class.java
+    override fun getViewModel() = MainViewModel::class.java
 
 }

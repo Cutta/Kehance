@@ -2,4 +2,5 @@
 <resources>
 
     <dimen name="app_bar_height">110dp</dimen>
+    <dimen name="app_bar_high_height">260dp</dimen>
 </resources>
