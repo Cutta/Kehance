@@ -20,26 +20,27 @@ class KehanceRepository @Inject constructor(private val service: KehanceService)
     fun getProjects(): Flowable<ProjectList> =
             service.getProjects(BuildConfig.API_KEY)
                     .subscribeOn(Schedulers.newThread())
-                    .observeOn(AndroidSchedulers.mainThread())
                     .toFlowable()
 
 
     fun getProjectWithId(id: Int): Flowable<ProjectDetail> =
             service.getProjectWithId(id, BuildConfig.API_KEY)
                     .subscribeOn(Schedulers.newThread())
-                    .observeOn(AndroidSchedulers.mainThread())
                     .toFlowable()
 
     fun getComments(id: Int): Flowable<Comments> =
             service.getComments(id, BuildConfig.API_KEY)
                     .subscribeOn(Schedulers.newThread())
-                    .observeOn(AndroidSchedulers.mainThread())
                     .toFlowable()
 
     fun getUser(id: Int): Flowable<UserInfo> =
             service.getUser(id, BuildConfig.API_KEY)
                     .subscribeOn(Schedulers.newThread())
-                    .observeOn(AndroidSchedulers.mainThread())
+                    .toFlowable()
+
+    fun getUserProjects(id: Int): Flowable<ProjectList> =
+            service.getUserProject(id, BuildConfig.API_KEY)
+                    .subscribeOn(Schedulers.newThread())
                     .toFlowable()
 
 }

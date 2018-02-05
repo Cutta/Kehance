@@ -7,8 +7,8 @@ import com.google.gson.annotations.SerializedName
 data class ProjectDetail(
 
 	@field:SerializedName("http_code")
-	val httpCode: Int? = null,
+	val httpCode: Int,
 
 	@field:SerializedName("project")
-	val project: Project? = null
+	val project: Project
 )

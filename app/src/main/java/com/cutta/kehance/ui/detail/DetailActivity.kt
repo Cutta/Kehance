@@ -14,10 +14,7 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
 import com.cutta.kehance.R
-import com.cutta.kehance.data.remote.model.CommentItem
-import com.cutta.kehance.data.remote.model.ModulesItem
-import com.cutta.kehance.data.remote.model.Project
-import com.cutta.kehance.data.remote.model.ProjectDetail
+import com.cutta.kehance.data.remote.model.*
 import com.cutta.kehance.ui.base.BaseActivity
 import com.cutta.kehance.ui.user.UserDetailActivity
 import com.cutta.kehance.util.ModuleType
@@ -62,8 +59,8 @@ class DetailActivity : BaseActivity<DetailViewModel>(), CommentListAdapter.Comme
 
     private fun observeViewModel() {
         viewModel.setProjectId(intent.getIntExtra(INTENT_EXTRA_PROJECT_ID, -1))
-        viewModel.details.observe(this, Observer { setViews(it) })
-        viewModel.comments.observe(this, Observer {
+        viewModel.details.reObserve(this, Observer { setViews(it!!) })
+        viewModel.comments.reObserve(this, Observer {
             val comments = it?.comments
             comments?.let { commentsAdapter.update(it) }
         })
@@ -74,40 +71,50 @@ class DetailActivity : BaseActivity<DetailViewModel>(), CommentListAdapter.Comme
             val percentage = Math.abs(verticalOffset).toFloat() / appBarLayout.totalScrollRange
             toolbarTitle.alpha = percentage
         }
+
     }
 
     private fun setRecyclerView() {
         commentsAdapter = CommentListAdapter(layoutResId = R.layout.item_comment, listener = this) {
             with(it) {
-                itemUserImage.load(user.images?.jsonMember100, TransformationType.CIRCLE)
+                itemUserImage.load(user.images.jsonMember276, TransformationType.CIRCLE)
                 itemUserName.text = user.displayName
                 itemCommentDate.text = createdOn.toDate()
                 itemComment.text = comment
             }
         }
 
-        with(commentsRecyclerView) {
+        commentsRecyclerView.apply {
             layoutManager = LinearLayoutManager(this@DetailActivity)
             setHasFixedSize(true)
             adapter = commentsAdapter
             isNestedScrollingEnabled = false
             addItemDecoration(DividerItemDecoration(this@DetailActivity, LinearLayoutManager.VERTICAL))
         }
+
     }
 
-    private fun setViews(projectDetail: ProjectDetail?) {
-        projectDetail?.project?.let {
+    private fun setViews(projectDetail: ProjectDetail) {
+        projectDetail.project.let {
             project = it
             projectName.text = it.name
             projectFields.text = it.fields.joinToString()
             likeCount.text = it.stats.appreciations.toString()
             viewsCount.text = it.stats.views.toString()
             commentCount.text = it.stats.comments.toString()
-            ownerImage.load(it.owners.getOrNull(0)?.images?.jsonMember100
+            ownerImage.load(it.owners.getOrNull(0)?.images?.jsonMember276
                     ?: "", TransformationType.CIRCLE)
             ownerName.text = it.owners.getOrNull(0)?.displayName ?: ""
-            //setContentModules(it.modules)
+            setContentModules(it.modules)
         }
+
+        ownerImage.setOnClickListener {
+            openUserDetail(projectDetail.project.owners[0])
+        }
+        ownerName.setOnClickListener {
+            openUserDetail(projectDetail.project.owners[0])
+        }
+
     }
 
     private fun setToolBar() {
@@ -152,7 +159,11 @@ class DetailActivity : BaseActivity<DetailViewModel>(), CommentListAdapter.Comme
     }
 
     override fun onCommentClick(item: CommentItem) {
-        startActivity(UserDetailActivity.getIntent(this, item.user.id, item.user.displayName))
+        openUserDetail(item.user)
+    }
+
+    private fun openUserDetail(user: UsersItem) {
+        startActivity(UserDetailActivity.getIntent(this, user.id, user.displayName))
     }
 
     override fun getLayoutId() = R.layout.activity_detail

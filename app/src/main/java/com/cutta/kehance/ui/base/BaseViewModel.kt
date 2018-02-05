@@ -1,5 +1,6 @@
 package com.cutta.kehance.ui.base
 
+import android.arch.lifecycle.MutableLiveData
 import android.arch.lifecycle.ViewModel
 import io.reactivex.disposables.CompositeDisposable
 
@@ -10,6 +11,7 @@ import io.reactivex.disposables.CompositeDisposable
 open class BaseViewModel : ViewModel() {
 
     var disposables = CompositeDisposable()
+    val errorLiveData = MutableLiveData<Throwable>()
 
     override fun onCleared() {
         super.onCleared()

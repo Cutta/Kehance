@@ -2,7 +2,7 @@ package com.cutta.kehance.di.module
 
 import com.cutta.kehance.BuildConfig
 import com.cutta.kehance.data.remote.KehanceService
-import com.cutta.kehance.debug
+import com.cutta.kehance.util.extension.debug
 import dagger.Module
 import dagger.Provides
 import okhttp3.OkHttpClient

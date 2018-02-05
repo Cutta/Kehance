@@ -72,4 +72,9 @@ fun View.circularReveal(backgroundColor: Int) {
     }
 }
 
+fun View.getCenter(): Pair<Float, Float> {
+    val cx = this.x + this.width / 2
+    val cy = this.y + this.height / 2
+    return Pair(cx, cy)
+}
 

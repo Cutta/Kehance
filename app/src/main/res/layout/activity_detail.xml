@@ -120,7 +120,7 @@
             android:layout_margin="8dp"
             android:background="@drawable/button_border"
             android:foreground="?attr/selectableItemBackground"
-            android:text="Follow"
+            android:text="@string/follow"
             android:textColor="@color/colorPrimary"
             app:layout_constraintBottom_toBottomOf="@+id/ownerImage"
             app:layout_constraintEnd_toEndOf="parent"

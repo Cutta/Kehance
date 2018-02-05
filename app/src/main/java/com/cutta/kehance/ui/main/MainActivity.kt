@@ -10,8 +10,10 @@ import com.cutta.kehance.R
 import com.cutta.kehance.data.remote.model.ProjectItem
 import com.cutta.kehance.ui.base.BaseActivity
 import com.cutta.kehance.ui.detail.DetailActivity
+import com.cutta.kehance.util.extension.alert
 import com.cutta.kehance.util.extension.isPortrait
 import com.cutta.kehance.util.extension.load
+import com.cutta.kehance.util.extension.reObserve
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.item_project.view.*
 
@@ -33,12 +35,6 @@ class MainActivity : BaseActivity<MainViewModel>(), ProjectListAdapter.ProjectCl
         return true
     }
 
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when (item.itemId) {
-            R.id.menu_item_search -> openSearchActivity()
-        }
-        return true
-    }
 
     private fun openSearchActivity() {
         Log.d("TAG", "openSearchActivity")
@@ -49,13 +45,29 @@ class MainActivity : BaseActivity<MainViewModel>(), ProjectListAdapter.ProjectCl
     }
 
     private fun observeViewModel() {
-        viewModel.projects.observe(this, Observer {
-            val projects = it?.projects
-            projects?.let { projectsAdapter.update(it) }
+        swipeRefreshLayout.isRefreshing = true
+        viewModel.projects.reObserve(this, Observer {
+            it?.projects.let {
+                projectsAdapter.update(it)
+                swipeRefreshLayout.isRefreshing = false
+            }
         })
+
+        viewModel.errorLiveData.observe(this, Observer {
+            alert {
+                setTitle(it?.message)
+                setPositiveButton(R.string.dialog_ok, null)
+            }
+            swipeRefreshLayout.isRefreshing = false
+        })
+
     }
 
     private fun initViews() {
+
+        swipeRefreshLayout.setOnRefreshListener {
+            observeViewModel()
+        }
 
         projectsAdapter = ProjectListAdapter(layoutResId = R.layout.item_project, listener = this) {
             with(it) {
@@ -68,12 +80,13 @@ class MainActivity : BaseActivity<MainViewModel>(), ProjectListAdapter.ProjectCl
             }
         }
 
-        with(projectsRecyclerView) {
+        projectsRecyclerView.apply {
             layoutManager = GridLayoutManager(this@MainActivity, if (isPortrait()) 2 else 3)
             setHasFixedSize(true)
             adapter = projectsAdapter
             scheduleLayoutAnimation()
         }
+
     }
 
     override fun onProjectClick(item: ProjectItem) {

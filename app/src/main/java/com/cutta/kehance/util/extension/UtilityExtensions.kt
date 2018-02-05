@@ -1,4 +1,6 @@
-package com.cutta.kehance
+package com.cutta.kehance.util.extension
+
+import com.cutta.kehance.BuildConfig
 
 /**
  * Created by CuneytCarikci on 10/01/2018.

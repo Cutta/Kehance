@@ -6,6 +6,7 @@ import com.cutta.kehance.data.remote.model.ProjectList
 import com.cutta.kehance.data.repository.KehanceRepository
 import com.cutta.kehance.ui.base.BaseViewModel
 import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.functions.Consumer
 import javax.inject.Inject
 
 /**
@@ -22,7 +23,12 @@ class MainViewModel @Inject constructor(kehanceRepository: KehanceRepository) : 
     init {
         disposables.add(kehanceRepository.getProjects()
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(projectsLiveData::setValue))
+                .subscribe(
+                        projectsLiveData::setValue
+                        ,
+                        {
+                            errorLiveData.value = it
+                        }))
     }
 
 

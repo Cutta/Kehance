@@ -24,4 +24,8 @@ interface KehanceService {
     @GET("users/{user_id}")
     fun getUser(@Path("user_id") id: Int, @Query("api_key") apiKey: String): Single<UserInfo>
 
+    @GET("users/{user_id}/projects")
+    fun getUserProject(@Path("user_id") id: Int, @Query("api_key") apiKey: String): Single<ProjectList>
+
+
 }

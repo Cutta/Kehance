@@ -16,7 +16,7 @@ import javax.inject.Inject
  */
 
 class DetailViewModel @Inject constructor(kehanceRepository: KehanceRepository) : BaseViewModel() {
-
+    //todo required error handling
     private val projectId: MutableLiveData<Int> = MutableLiveData()
     val details: LiveData<ProjectDetail>
     val comments: LiveData<Comments>
